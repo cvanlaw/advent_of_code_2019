@@ -16,6 +16,12 @@ export class DayOneSolution implements DaySolution {
     private getFuelForModule(moduleMass: number): number {
         let fuelRequired = moduleMass / 3;
         fuelRequired = Math.floor(fuelRequired);
-        return fuelRequired - 2;
+        fuelRequired = fuelRequired - 2;
+
+        if (fuelRequired > 0) {
+            return fuelRequired + this.getFuelForModule(fuelRequired);
+        }
+
+        return 0;
     }
 }
