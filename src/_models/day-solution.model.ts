@@ -1,3 +1,3 @@
 export interface DaySolution {
-    getSolution(): any;
+    getSolution(): string;
 }
