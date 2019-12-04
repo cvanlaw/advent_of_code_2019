@@ -14,7 +14,7 @@
     "typescript": "^3.7.2"
   },
   "scripts": {
-    "ts-node": "ts-node"
+    "start": "ts-node ./src/index.ts"
   },
   "config": {
     "commitizen": {
