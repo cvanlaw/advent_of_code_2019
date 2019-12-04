@@ -15,15 +15,17 @@ export class DayThreeSolution implements DaySolution {
 
     private findClosestIntersection(intersections: Point[]): string {
         let closestIntersection = 0;
+        let numberOfMoves = 0;
 
         for (const point of intersections) {
             const distance = Math.abs(point.x) + Math.abs(point.y);
-            if (closestIntersection === 0 || distance < closestIntersection) {
+            if (numberOfMoves === 0 || point.moveNumber < numberOfMoves) {
                 closestIntersection = distance;
+                numberOfMoves = point.moveNumber;
             }
         }
 
-        return closestIntersection.toString();
+        return `Intersection distance: ${closestIntersection.toString()} number of moves: ${numberOfMoves}`;
     }
 
     private findIntersections(
@@ -34,6 +36,7 @@ export class DayThreeSolution implements DaySolution {
 
         wire1.forEach((value: Point, key: string) => {
             if (wire2.has(key)) {
+                value.moveNumber += wire2.get(key).moveNumber;
                 points.push(value);
             }
         });
@@ -44,14 +47,17 @@ export class DayThreeSolution implements DaySolution {
     private parsePointsFromWiresInput(wireInput: string[]): Map<string, Point> {
         const currentPoint: Point = {
             x: 0,
-            y: 0
+            y: 0,
+            moveNumber: 0
         };
         const points = new Map<string, Point>();
         points.set(JSON.stringify(currentPoint), {
             x: currentPoint.x,
-            y: currentPoint.y
+            y: currentPoint.y,
+            moveNumber: currentPoint.moveNumber
         });
 
+        let i = 1;
         for (const entry of wireInput) {
             const direction = entry.substring(0, 1);
             const length = +entry.substring(1);
@@ -60,12 +66,14 @@ export class DayThreeSolution implements DaySolution {
 
                 const json = JSON.stringify(currentPoint);
                 if (points.has(json)) {
+                    i++;
                     continue;
                 }
 
                 points.set(json, {
                     x: currentPoint.x,
-                    y: currentPoint.y
+                    y: currentPoint.y,
+                    moveNumber: i++
                 });
             }
         }
