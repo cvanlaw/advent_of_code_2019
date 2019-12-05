@@ -13,4 +13,4 @@ const dayThreeSolution: DayThreeSolution = new DayThreeSolution();
 console.log("Day 3: " + dayThreeSolution.getSolution());
 
 const dayFourSolution: DayFourSolution = new DayFourSolution();
-console.log("Day 3: " + dayFourSolution.getSolution());
+console.log("Day 4: " + dayFourSolution.getSolution());

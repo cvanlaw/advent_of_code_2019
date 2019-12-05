@@ -7,7 +7,7 @@ export class DayFourSolution implements DaySolution {
     public getSolution(): string {
         let passwordCount = 0;
         for (let i = this.lowerBound; i <= this.uppperBound; i++) {
-            if (!this.meetsAdjacencyRule(i)) {
+            if (!this.meetsMultipleDigitsRule(i)) {
                 continue;
             }
 
@@ -19,6 +19,14 @@ export class DayFourSolution implements DaySolution {
         }
 
         return passwordCount.toString();
+    }
+
+    private meetsMultipleDigitsRule(candidate: number): boolean {
+        const regex = /(\d)\1{1,}/g;
+        const matches = candidate.toString().match(regex);
+        return (
+            matches && matches.length >= 1 && matches.some(x => x.length === 2)
+        );
     }
 
     private meetsIncreasingRule(candidate: number): boolean {
@@ -37,24 +45,6 @@ export class DayFourSolution implements DaySolution {
         }
 
         return true;
-    }
-
-    private meetsAdjacencyRule(candidate: number): boolean {
-        const digits = this.numberToArray(candidate);
-
-        let i = 1;
-        for (const digit of digits) {
-            if (i === digits.length) {
-                return false;
-            }
-
-            if (digit === digits[i]) {
-                return true;
-            }
-            i++;
-        }
-
-        return false;
     }
 
     private numberToArray(valueToSplit: number): number[] {
